@@ -1,32 +1,32 @@
-// database.js (최종 완성본)
+// database.js (최종 완성본 - 개별 환경변수 사용)
 
 import { Sequelize, DataTypes } from 'sequelize';
-import 'dotenv/config'; // 로컬에서 .env 파일을 사용하기 위해 필요
+import 'dotenv/config';
 
-// Railway나 Docker Compose 같은 배포 환경에서는 DATABASE_URL 환경변수가 필수로 제공되어야 함
-if (!process.env.DATABASE_URL) {
-  // .env 파일이 없거나 DATABASE_URL이 설정되지 않은 경우 에러 발생
-  throw new Error('DATABASE_URL 환경변수가 설정되지 않았습니다. .env 파일을 확인해주세요.');
-}
-
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+// 개별 환경 변수를 사용하여 Sequelize 인스턴스 생성
+const sequelize = new Sequelize(
+  process.env.MYSQLDATABASE, // 1. 데이터베이스 이름
+  process.env.MYSQLUSER,     // 2. 사용자 이름
+  process.env.MYSQLPASSWORD, // 3. 비밀번호
+  {
+    host: process.env.MYSQLHOST, // 4. 호스트 주소
+    port: process.env.MYSQLPORT, // 5. 포트 번호
     dialect: 'mysql',
     dialectOptions: {
       // Railway 같은 클라우드 DB는 보안 연결(SSL)을 필수로 요구하는 경우가 많습니다.
-      // 로컬 Docker MySQL에 연결할 때는 이 옵션이 무시될 수 있으므로 호환성을 위해 유지합니다.
       ssl: {
         require: true,
         rejectUnauthorized: false
       }
     },
-    // 연결 풀링 설정 (안정성 향상)
     pool: {
       max: 5,
       min: 0,
       acquire: 30000,
       idle: 10000
     }
-});
+  }
+);
 
 // 'User' 모델 (테이블) 정의
 const User = sequelize.define('User', {
@@ -39,9 +39,6 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false
     }
-}, {
-    // 타임스탬프를 사용하지 않으려면 주석 해제
-    // timestamps: false
 });
 
 // 'Server' 모델 (테이블) 정의
