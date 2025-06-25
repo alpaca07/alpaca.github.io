@@ -1,4 +1,4 @@
-// server.js (최종 완성본)
+// server.js (최종 수정본)
 
 import express from 'express';
 import { createServer } from 'http';
@@ -37,15 +37,27 @@ const fetchMinecraftServerStatus = async (host, port) => {
     }
 };
 
+/**
+ * [수정됨] 안정성을 위해 setInterval 대신 재귀적 setTimeout을 사용하는 모니터링 함수
+ * @param {Server} server - 모니터링할 서버 객체
+ */
 const startMonitoring = (server) => {
+    // 이미 해당 서버에 대한 모니터링이 있다면 기존 타이머를 제거합니다.
     if (monitoringIntervals.has(server.id)) {
-        clearInterval(monitoringIntervals.get(server.id));
+        clearTimeout(monitoringIntervals.get(server.id));
     }
-    const intervalId = setInterval(async () => {
+
+    const monitor = async () => {
+        // 서버 상태를 확인하고 모든 클라이언트에게 업데이트를 전송합니다.
         const status = await fetchMinecraftServerStatus(server.host, server.port);
         io.emit('serverStatusUpdate', { serverInfo: server.toJSON(), status });
-    }, 5 * 60 * 1000);
-    monitoringIntervals.set(server.id, intervalId);
+        
+        // 작업이 완료된 후, 5분 뒤에 다시 이 함수를 실행하도록 예약합니다.
+        const timeoutId = setTimeout(monitor, 5 * 60 * 1000);
+        monitoringIntervals.set(server.id, timeoutId);
+    };
+
+    monitor(); // 최초 즉시 실행
 };
 
 app.post('/api/register', async (req, res) => {
@@ -102,20 +114,29 @@ app.delete('/api/servers/:id', async (req, res) => {
         if (server.UserId !== req.session.user.id) return res.status(403).json({ error: '서버를 삭제할 권한이 없습니다.' });
         
         await server.destroy();
-        clearInterval(monitoringIntervals.get(serverId));
+        // setInterval 대신 setTimeout을 사용하므로 clearTimeout으로 변경
+        clearTimeout(monitoringIntervals.get(serverId));
         monitoringIntervals.delete(serverId);
         io.emit('serverRemoved', { id: serverId });
         res.status(200).json({ message: '서버가 성공적으로 삭제되었습니다.' });
     } catch (error) { res.status(500).json({ error: '서버 삭제 중 오류가 발생했습니다.' }); }
 });
 
+/**
+ * [수정됨] 초기 로딩 속도 개선을 위한 점진적 로딩 방식 적용
+ */
 io.on('connection', async (socket) => {
+    // 1. DB에서 서버 목록을 가져옵니다.
     const servers = await Server.findAll({ include: User });
-    const initialData = await Promise.all(servers.map(async (server) => ({
-        serverInfo: server,
-        status: await fetchMinecraftServerStatus(server.host, server.port)
-    })));
-    socket.emit('initialServers', initialData);
+
+    // 2. 핑을 기다리지 말고, 서버 목록 데이터(뼈대)를 즉시 전송하여 클라이언트가 화면을 먼저 그리게 합니다.
+    socket.emit('initialServerList', servers.map(s => s.toJSON()));
+
+    // 3. 각 서버의 상태를 개별적으로 확인하고, 확인되는 대로 클라이언트에 'serverStatusUpdate' 이벤트를 보내 업데이트합니다.
+    servers.forEach(async (server) => {
+        const status = await fetchMinecraftServerStatus(server.host, server.port);
+        socket.emit('serverStatusUpdate', { serverInfo: server.toJSON(), status });
+    });
 });
 
 const seedInitialServers = async () => {
