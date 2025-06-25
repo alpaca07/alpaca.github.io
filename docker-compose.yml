@@ -1,0 +1,36 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  # 1. Node.js 애플리케이션 서비스
+  app:
+    build: . # 현재 폴더의 Dockerfile을 사용하여 이미지를 빌드
+    ports:
+      - "3000:3000" # 내 컴퓨터의 3000번 포트와 컨테이너의 3000번 포트를 연결
+    volumes:
+      - .:/app # 내 컴퓨터의 소스 코드와 컨테이너의 코드를 실시간 동기화
+      - /app/node_modules # 컨테이너 내부의 node_modules가 덮어씌워지는 것을 방지
+    environment:
+      # 앱에서 사용할 환경변수 (database.js가 이 주소를 사용함)
+      - DATABASE_URL=mysql://user:password@db:3306/mc_community
+      - NODE_ENV=development
+    depends_on: # db 서비스가 먼저 실행되도록 설정
+      - db
+
+  # 2. MySQL 데이터베이스 서비스
+  db:
+    image: mysql:8.0 # Docker Hub의 공식 MySQL 이미지 사용
+    restart: always # 컨테이너가 중지되면 항상 다시 시작
+    environment:
+      # 위 DATABASE_URL과 반드시 일치시켜야 함
+      - MYSQL_DATABASE=mc_community
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=rootpassword # 루트 비밀번호는 별도로 설정
+    volumes:
+      # DB 데이터를 영구적으로 보존하기 위한 볼륨 설정
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data: # 위에서 사용한 db-data 볼륨을 정의

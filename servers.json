@@ -1,0 +1,37 @@
+[
+  {
+    "id": "hypixel",
+    "name": "Hypixel",
+    "host": "mc.hypixel.net",
+    "port": 25565,
+    "description": "세계에서 가장 큰 마인크래프트 미니게임 서버"
+  },
+  {
+    "id": "cubecraft",
+    "name": "CubeCraft",
+    "host": "play.cubecraft.net",
+    "port": 25565,
+    "description": "다양한 미니게임을 제공하는 인기 네트워크"
+  },
+  {
+    "id": "mineplex",
+    "name": "Mineplex",
+    "host": "us.mineplex.com",
+    "port": 25565,
+    "description": "클래식 미니게임 서버"
+  },
+  {
+    "id": "wynncraft",
+    "name": "Wynncraft",
+    "host": "play.wynncraft.com",
+    "port": 25565,
+    "description": "마인크래프트 MMO RPG 서버"
+  },
+  {
+    "id": "2b2t",
+    "name": "2b2t",
+    "host": "2b2t.org",
+    "port": 25565,
+    "description": "가장 오래된 무정부 서버"
+  }
+]
