@@ -1,4 +1,4 @@
-// public/script.js (최종 완성본)
+// public/script.js (최종 수정본)
 
 document.addEventListener("DOMContentLoaded", () => {
     // --- 1. 모든 페이지에서 공통으로 실행되는 내비게이션 바 업데이트 ---
@@ -114,23 +114,30 @@ document.addEventListener("DOMContentLoaded", () => {
         const noServersMessageHTML = '<p id="no-servers-message">등록된 서버가 없습니다. 새 서버를 추가해주세요.</p>';
         const addServerForm = document.getElementById("add-server-form");
 
+        /**
+         * [수정됨] 로딩 상태('확인 중...')를 처리할 수 있도록 개선된 카드 렌더링 함수
+         * @param {object} serverInfo - 서버의 기본 정보
+         * @param {object} status - 서버의 실시간 상태 정보
+         */
         const renderServerCard = (serverInfo, status) => {
             const isOnline = status.online;
+            const isLoading = status.error === '확인 중...';
             const owner = serverInfo.User?.username || 'System';
+
             return `
                 <div class="server-card" id="server-${serverInfo.id}">
                     <div class="card-header">
-                        <h3><span class="status-indicator ${isOnline ? 'online' : 'offline'}"></span>${serverInfo.name}</h3>
+                        <h3><span class="status-indicator ${isLoading ? '' : (isOnline ? 'online' : 'offline')}"></span>${serverInfo.name}</h3>
                         ${owner !== 'System' ? `<button class="delete-server-btn" data-id="${serverInfo.id}"><i class="fas fa-trash-alt"></i> 삭제</button>` : ''}
                     </div>
                     <div class="card-body">
                         <p class="description">${serverInfo.description || '서버 설명이 없습니다.'}</p>
                         <div class="status-details">
                             <div class="detail-item"><span class="detail-label"><i class="fas fa-network-wired"></i> 주소</span><span class="host-address-value">${serverInfo.host}:${serverInfo.port}</span></div>
-                            <div class="detail-item"><span class="detail-label"><i class="fas fa-signal"></i> 상태</span><span class="status-text ${isOnline ? 'online' : 'offline'}">${isOnline ? '온라인' : '오프라인'}</span></div>
-                            <div class="detail-item"><span class="detail-label"><i class="fas fa-users"></i> 접속자</span><span class="players-value">${isOnline ? `${status.players.online} / ${status.players.max}` : 'N/A'}</span></div>
-                            <div class="detail-item"><span class="detail-label"><i class="fas fa-gamepad"></i> 버전</span><span class="version-value">${isOnline ? status.version : 'N/A'}</span></div>
-                            <div class="detail-item"><span class="detail-label"><i class="fas fa-tachometer-alt"></i> 핑</span><span class="ping-value">${isOnline ? `${status.ping}ms` : 'N/A'}</span></div>
+                            <div class="detail-item"><span class="detail-label"><i class="fas fa-signal"></i> 상태</span><span class="status-text ${isLoading ? '' : (isOnline ? 'online' : 'offline')}">${isLoading ? '확인 중...' : (isOnline ? '온라인' : '오프라인')}</span></div>
+                            <div class="detail-item"><span class="detail-label"><i class="fas fa-users"></i> 접속자</span><span class="players-value">${isLoading ? '...' : (isOnline ? `${status.players.online} / ${status.players.max}` : 'N/A')}</span></div>
+                            <div class="detail-item"><span class="detail-label"><i class="fas fa-gamepad"></i> 버전</span><span class="version-value">${isLoading ? '...' : (isOnline ? status.version : 'N/A')}</span></div>
+                            <div class="detail-item"><span class="detail-label"><i class="fas fa-tachometer-alt"></i> 핑</span><span class="ping-value">${isLoading ? '...' : (isOnline ? `${status.ping}ms` : 'N/A')}</span></div>
                         </div>
                     </div>
                 </div>
@@ -145,18 +152,23 @@ document.addEventListener("DOMContentLoaded", () => {
             if (lastUpdateEl) lastUpdateEl.textContent = `마지막 업데이트: ${new Date().toLocaleTimeString()}`;
         };
 
-        socket.on('initialServers', (servers) => {
+        /**
+         * [수정됨] 점진적 로딩을 위한 이벤트 리스너 변경
+         */
+        // 1. 서버로부터 '뼈대'가 되는 서버 목록을 먼저 받아서 화면에 즉시 렌더링
+        socket.on('initialServerList', (servers) => {
             if (servers.length === 0) {
                 serverListContainer.innerHTML = noServersMessageHTML;
             } else {
                 const serverCardsHTML = servers
-                    .map(({ serverInfo, status }) => renderServerCard(serverInfo, status))
+                    .map((serverInfo) => renderServerCard(serverInfo, { online: false, error: '확인 중...' }))
                     .join('');
                 serverListContainer.innerHTML = serverCardsHTML;
             }
             updateMonitoringInfo();
         });
 
+        // 2. 개별 서버의 상태가 도착할 때마다 해당 카드를 찾아서 내용 업데이트
         socket.on('serverStatusUpdate', ({ serverInfo, status }) => {
             const card = document.getElementById(`server-${serverInfo.id}`);
             if (card) {
@@ -164,6 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 updateMonitoringInfo();
             }
         });
+
 
         socket.on('serverAdded', ({ server, status }) => {
             const noServersMessage = document.getElementById('no-servers-message');
