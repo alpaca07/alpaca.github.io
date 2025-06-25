@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서버 모니터링 - 마인크래프트 커뮤니티</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <nav class="main-nav">
+        <div class="container nav-container">
+            <a href="/" class="nav-brand">MC Community</a>
+            <ul class="nav-links">
+                <li><a href="/">홈</a></li>
+                <li><a href="/monitor.html">서버 모니터링</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="/login.html" class="nav-button login">로그인</a>
+                <a href="/register.html" class="nav-button register">회원가입</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-title-section">
+        <div class="container">
+            <h1><i class="fas fa-satellite-dish"></i> 실시간 서버 모니터링</h1>
+            <p>서버를 추가, 관리하고 실시간 상태를 확인하세요.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="top-content-grid">
+            <section class="add-server-section card-style">
+                <h2><i class="fas fa-plus-circle"></i> 새 서버 추가</h2>
+                <form id="add-server-form" class="server-form">
+                    <div class="form-group">
+                        <label for="server-name">서버 이름</label>
+                        <input type="text" id="server-name" name="name" required placeholder="예: My Awesome Server">
+                    </div>
+                    <div class="form-group">
+                        <label for="server-host">서버 주소</label>
+                        <input type="text" id="server-host" name="host" required placeholder="예: play.example.com 또는 192.168.1.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="server-port">포트 (기본: 25565)</label>
+                        <input type="number" id="server-port" name="port" value="25565" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="server-description">설명</label>
+                        <textarea id="server-description" name="description" rows="3" placeholder="이 서버에 대한 간략한 설명을 추가하세요."></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">서버 추가하기</button>
+                </form>
+                <p id="form-message" class="message"></p>
+            </section>
+            
+            <section class="monitoring-info-box card-style">
+                 <h2><i class="fas fa-chart-bar"></i> 모니터링 현황</h2>
+                 <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">총 등록 서버</span>
+                        <strong id="total-servers">0</strong>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">온라인 서버</span>
+                        <strong id="online-servers">0</strong>
+                    </div>
+                 </div>
+                 <p id="last-update-time">마지막 업데이트: 로딩 중...</p>
+            </section>
+        </div>
+
+        <hr class="section-divider">
+
+        <section class="server-list-section">
+            <h2><i class="fas fa-list-ul"></i> 등록된 서버 목록</h2>
+            <div id="server-list" class="server-grid">
+                <p class="loading-text">서버 목록을 불러오는 중...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer" class="site-footer">
+        <p>&copy; 2025 마인크래프트 커뮤니티. All rights reserved.</p>
+    </footer>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/script.js"></script>
+</body>
+</html>

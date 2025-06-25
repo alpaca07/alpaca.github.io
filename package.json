@@ -1,0 +1,35 @@
+{
+  "name": "minecraft-server-monitor",
+  "version": "1.0.0",
+  "description": "Minecraft Server Monitoring Web Application with Node.js, Express, Socket.IO, HTML, CSS, JS",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "minecraft",
+    "server",
+    "monitor",
+    "nodejs",
+    "express",
+    "socket.io"
+  ],
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "minecraft-protocol": "^1.47.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.14.1",
+    "sequelize": "^6.37.7",
+    "socket.io": "^4.7.5"
+  }
+}

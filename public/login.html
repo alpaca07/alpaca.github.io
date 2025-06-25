@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - 마인크래프트 커뮤니티</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <h1>로그인</h1>
+        <div class="header-auth-links">
+            <a href="/login.html">로그인</a> | <a href="/register.html">회원가입</a>
+        </div>
+    </header>
+
+    <main class="container form-page-content">
+        <section class="auth-card">
+            <h2>로그인</h2>
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="username">사용자 이름</label>
+                    <input type="text" id="username" name="username" required placeholder="사용자 이름을 입력하세요">
+                </div>
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" name="password" required placeholder="비밀번호를 입력하세요">
+                </div>
+                <button type="submit" class="submit-button">로그인</button>
+            </form>
+            <p class="auth-link">계정이 없으신가요? <a href="/register.html">회원가입</a></p>
+            <p id="auth-message" class="message"></p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 마인크래프트 커뮤니티. All rights reserved.</p>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+</html>

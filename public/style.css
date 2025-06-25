@@ -1,0 +1,331 @@
+/* General Body Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Main Navigation Bar */
+.main-nav {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #495057;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #4CAF50;
+}
+
+.nav-auth {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-button {
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-button.login {
+    background-color: transparent;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+}
+
+.nav-button.login:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.nav-button.register {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+.nav-button.register:hover {
+    background-color: #45a049;
+}
+
+
+/* --- 메인 페이지 스타일 --- */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('https://www.minecraft.net/content/dam/games/minecraft/key-art/Caves-and-Cliffs-Part-2-Key-Art.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 120px 20px;
+}
+.hero-content h1 { font-size: 3.2em; margin: 0 0 20px 0; font-weight: 700; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
+.hero-content p { font-size: 1.2em; max-width: 600px; margin: 0 auto 30px auto; opacity: 0.9; }
+.hero-button { background-color: #ffb13d; color: #333; padding: 15px 30px; text-decoration: none; font-size: 1.1em; font-weight: bold; border-radius: 8px; transition: all 0.3s ease; }
+.hero-button:hover { background-color: #e69f29; transform: translateY(-3px); }
+
+.features-section { padding: 80px 20px; }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.feature-card { background-color: #ffffff; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); text-align: center; transition: all 0.3s ease; }
+.feature-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); }
+.card-icon { font-size: 2.5em; color: #4CAF50; margin-bottom: 20px; }
+.feature-card h2 { font-size: 1.5em; margin: 0 0 15px 0; color: #343a40; }
+.feature-card p { color: #6c757d; margin-bottom: 20px; }
+.card-link { text-decoration: none; color: #4CAF50; font-weight: bold; }
+
+
+/* --- 모니터링 페이지 스타일 --- */
+.page-title-section {
+    background-color: #e9ecef;
+    padding: 40px 20px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 40px;
+}
+.page-title-section h1 { font-size: 2.5em; color: #343a40; margin: 0 0 10px 0; }
+.page-title-section p { font-size: 1.1em; color: #6c757d; margin: 0; }
+
+.top-content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    align-items: flex-start;
+}
+.card-style {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+.card-style h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.5em;
+    color: #343a40;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+.card-style h2 i { color: #4CAF50; }
+
+/* --- 서버 추가 폼 디자인 개선 --- */
+.add-server-section.card-style {
+    /* 폼이 2단 그리드에 잘 맞도록 내부 정렬 조정 */
+    display: flex;
+    flex-direction: column;
+}
+
+.add-server-section .server-form {
+    flex-grow: 1; /* 폼이 카드 공간을 채우도록 함 */
+    display: grid;
+    grid-template-columns: auto 1fr; /* 레이블 너비는 자동으로, 입력창은 나머지 공간 모두 사용 */
+    gap: 16px 12px; /* 세로, 가로 간격 */
+    align-items: center; /* 레이블과 입력창을 세로 중앙 정렬 */
+    padding: 0;
+    box-shadow: none;
+    border: none;
+}
+
+.add-server-section .form-group {
+    /* form-group을 그리드의 컨테이너로 사용하기 위해 display: contents 제거 */
+    /* 대신 label과 input을 직접 grid-template-columns로 제어 */
+    display: grid;
+    grid-column: 1 / -1; /* form-group이 한 줄을 모두 차지하도록 */
+    grid-template-columns: subgrid; /* 부모 그리드의 컬럼 설정을 상속받음 */
+    gap: 16px 12px;
+    align-items: center;
+}
+
+.add-server-section .form-group label {
+    grid-column: 1 / 2;
+    text-align: right; /* 레이블 오른쪽 정렬로 깔끔하게 */
+    font-weight: 600;
+    color: #495057;
+    padding-right: 10px; /* 입력창과의 간격 */
+}
+
+.add-server-section .form-group input,
+.add-server-section .form-group textarea {
+    grid-column: 2 / 3;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-size: 0.95em;
+}
+
+.add-server-section .form-group input:focus,
+.add-server-section .form-group textarea:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2); /* 포커스 시 강조 효과 */
+}
+
+.add-server-section .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.add-server-section .submit-button {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+    padding: 12px;
+    font-size: 1.05em;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%; /* 너비 100% */
+}
+
+/* 버튼 색상 기존 테마와 통일 */
+.add-server-section .submit-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.add-server-section .submit-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.add-server-section #form-message {
+    grid-column: 1 / -1;
+    text-align: center;
+}
+
+.monitoring-info-box .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.monitoring-info-box .info-item .info-label { display: block; font-size: 0.9em; color: #6c757d; margin-bottom: 5px; }
+.monitoring-info-box .info-item strong { font-size: 2.2em; color: #4CAF50; }
+.monitoring-info-box #last-update-time { text-align: center; font-size: 0.85em; color: #6c757d; margin-top: 25px; }
+
+.section-divider { border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)); margin: 60px auto; }
+
+.server-list-section h2 { font-size: 1.8em; margin-bottom: 25px; color: #343a40; display:flex; align-items:center; gap: 10px;}
+.server-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+.server-card { background-color: white; border: 1px solid #e0e0e0; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); display: flex; flex-direction: column; transition: all 0.3s ease; }
+.server-card:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12); }
+.card-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid #f0f0f0; }
+.card-header h3 { margin: 0; font-size: 1.25em; color: #2c3e50; display: flex; align-items: center; gap: 12px; }
+.status-indicator { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+.status-indicator.online { background-color: #2ecc71; }
+.status-indicator.offline { background-color: #e74c3c; }
+.delete-server-btn { background-color: transparent; color: #e74c3c; border: 1px solid #e74c3c; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; display: flex; align-items: center; gap: 5px; }
+.delete-server-btn:hover { background-color: #e74c3c; color: white; }
+.card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; gap: 15px; }
+.server-card .description { font-size: 0.95em; color: #555; margin: 0; padding-bottom: 15px; border-bottom: 1px dashed #e0e0e0; }
+.status-details { display: flex; flex-direction: column; gap: 10px; font-size: 0.9em; }
+.detail-item { display: flex; justify-content: space-between; align-items: center; background-color: #f8f9fa; padding: 10px 12px; border-radius: 6px; border: 1px solid #f1f3f5; }
+.detail-label { font-weight: 600; color: #495057; display: flex; align-items: center; gap: 8px; }
+.detail-label i { color: #868e96; }
+.host-address-value, .players-value, .version-value, .ping-value, .status-text { font-weight: bold; color: #212529; }
+.status-text.online { color: #28a745; }
+.status-text.offline { color: #dc3545; }
+
+/* --- 로그인, 회원가입 페이지 스타일 --- */
+.page-header { background-color: #4CAF50; color: white; padding: 25px 0; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 30px; }
+.form-page-content { display: flex; justify-content: center; align-items: flex-start; padding-top: 40px; min-height: 60vh; }
+.auth-card { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); width: 100%; max-width: 450px; text-align: center; }
+.auth-card h2 { margin-top: 0; margin-bottom: 30px; }
+.auth-form .form-group { margin-bottom: 20px; text-align: left; }
+.auth-form label { font-weight: 600; margin-bottom: 8px; display: block; }
+.auth-form input { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #ced4da; box-sizing: border-box; }
+.submit-button { width: 100%; padding: 12px; background: #4CAF50; color: white; border: none; border-radius: 6px; font-size: 1.1em; cursor: pointer; transition: background-color 0.3s ease; }
+.submit-button:hover { background: #45a049; }
+.auth-link { margin-top: 20px; }
+.message { margin-top: 15px; }
+.message.success { background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; padding: 10px; border-radius: 6px; }
+.message.error { background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; padding: 10px; border-radius: 6px; }
+
+/* --- 푸터 --- */
+.site-footer {
+    background-color: #343a40;
+    color: #e9ecef;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 80px;
+    font-size: 0.9em;
+}
+
+/* --- 반응형 디자인 --- */
+@media (max-width: 992px) {
+    .top-content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 768px) {
+    .nav-container { flex-direction: column; gap: 15px; }
+    .nav-links { order: 3; margin-top: 15px; }
+    .nav-auth { order: 2; }
+    .hero-content h1 { font-size: 2.5em; }
+    .hero-content p { font-size: 1.1em; }
+}
+
+/* --- 내비게이션 바 로그인 상태 스타일 추가 --- */
+.nav-username {
+    display: flex;
+    align-items: center;
+    color: #343a40;
+    font-weight: 500;
+}
+
+.nav-button.logout {
+    background-color: #6c757d;
+    color: white;
+    border-color: #6c757d;
+}
+
+.nav-button.logout:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 - 마인크래프트 커뮤니티</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <h1>회원가입</h1>
+        <div class="header-auth-links">
+            <a href="/login.html">로그인</a> | <a href="/register.html">회원가입</a>
+        </div>
+    </header>
+
+    <main class="container form-page-content">
+        <section class="auth-card">
+            <h2>새 계정 만들기</h2>
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label for="reg-username">사용자 이름</label>
+                    <input type="text" id="reg-username" name="username" required placeholder="사용할 사용자 이름을 입력하세요">
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">비밀번호</label>
+                    <input type="password" id="reg-password" name="password" required placeholder="비밀번호를 입력하세요 (8자 이상)">
+                </div>
+                <div class="form-group">
+                    <label for="reg-confirm-password">비밀번호 확인</label>
+                    <input type="password" id="reg-confirm-password" name="confirm-password" required placeholder="비밀번호를 다시 입력하세요">
+                </div>
+                <button type="submit" class="submit-button">회원가입</button>
+            </form>
+            <p class="auth-link">이미 계정이 있으신가요? <a href="/login.html">로그인</a></p>
+            <p id="auth-message" class="message"></p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 마인크래프트 커뮤니티. All rights reserved.</p>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+</html>
